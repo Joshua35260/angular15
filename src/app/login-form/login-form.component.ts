@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { LoginValidator } from './login-validator';
+
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
@@ -7,21 +9,23 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 })
 export class LoginFormComponent {
 
+  loginForm = this.fb.group({
+    credentials: this.fb.group({
+      email: ['', [Validators.required, LoginValidator.email]],
+      password: ['', [Validators.required, LoginValidator.password]],
+    }),
+  });
+
   onSubmit() {
-    if (this.userForm.valid) {
-      console.log(this.userForm.value);
+    if (this.loginForm.valid) {
+      console.log(this.loginForm.value);
       // exécuter le code de soumission du formulaire ici
     } else {
       console.log('Formulaire invalide, ho bah mince alors !');
     }
   }
 
-  userForm = this.fb.group({
-    credentials: this.fb.group({
-      email: [''],
-      password: [''],
-    }),
-  });
 
   constructor(private fb: FormBuilder) {}
+  
 }

@@ -1,15 +1,27 @@
 <p>login-form works!</p>
 
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <div formGroupName="credentials">
+    
     <label for="email"
       >Email
       <input type="text" formControlName="email" required />
     </label>
+    {{ loginForm.get('credentials.email')?.errors?.['email'].rules }}
+    <div *ngIf="loginForm.get('credentials.email')?.errors && !loginForm.get('credentials.email')" class="error-msg">
+    </div> 
+    <br>
+
     <label for="password"
       >Password
       <input type="text" formControlName="password" required />
+      {{ loginForm.get('credentials.password')?.errors?.['password'].rules }}
+        <div *ngIf="loginForm.get('credentials.password')?.errors && !loginForm.get('credentials.password')" class="error-msg">
+        </div>
     </label>
-    <button type="submit" [disabled]="!userForm.valid">Submit</button>
+    <br>
+
+    <button type="submit" [disabled]="!loginForm.valid">Submit</button>
+
   </div>
 </form>
